@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d77f1a98-eb46-4e60-b03f-f696b86f84ad/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/Sølvkikkert",
+    "appService.deploySubpath": "publish"
+}
