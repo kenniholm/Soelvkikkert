@@ -52,7 +52,7 @@ namespace Soelvkikkert
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
