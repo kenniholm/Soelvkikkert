@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Soelvkikkert.Models;
+using Microsoft.EntityFrameworkCore;
+using Soelvkikkert.Data;
 
 namespace Soelvkikkert
 {
@@ -30,7 +33,8 @@ namespace Soelvkikkert
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            services.AddDbContext<RazorPagesSubscriberContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("SubscriberContext")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
