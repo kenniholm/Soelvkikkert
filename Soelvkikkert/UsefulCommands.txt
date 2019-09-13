@@ -1,0 +1,3 @@
+Create publish folder: dotnet publish -c Release -o ./publish
+
+Create new Pages: dotnet new page --name Indtast navn --namespace Soelvkikkert.Pages --output Pages

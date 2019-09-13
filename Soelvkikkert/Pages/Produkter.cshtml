@@ -1,0 +1,22 @@
+﻿@page
+@model Soelvkikkert.Pages.SubscriptionModel
+@{
+    ViewData["Title"] = "Subscriptions";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <div class="row">
+        @{
+            for(int i=1; i <= 50; i++){
+               <div class="card m-3" style="width: 18rem;">
+                    <img src="~/Images/Soelvkikkert.png" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Produkt nr. @i</h5>
+                        <p>Beskrivelse her... bla bla bla</p>
+                        <a href="https://www.google.com" class="btn btn-primary">Link til produkt</a>
+                    </div>
+                </div>
+            }
+        }
+</div>
