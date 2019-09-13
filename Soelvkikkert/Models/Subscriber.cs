@@ -24,6 +24,11 @@ namespace Soelvkikkert.Models
         private bool active { get; set; }
         private string product { get; set; }
 
+        [DataType(DataType.Date)]
+        private DateTime SubscribtionStart { get; set; }
+        [DataType(DataType.Date)]
+        private DateTime SubscribtionEnd { get; set; }
+
 
     }
 }
