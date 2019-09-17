@@ -9,6 +9,7 @@ namespace Soelvkikkert.Models
     public class Subscriber
     {
 
+<<<<<<< HEAD
         public string Email { get; set; }
         [Key]
         public string PhoneNumber { get; set; }
@@ -23,6 +24,23 @@ namespace Soelvkikkert.Models
         public DateTime SubscribtionStart { get; set; }
         [DataType(DataType.Date)]
         public DateTime SubscribtionEnd { get; set; }
+=======
+        public int ID { get; set; }
+        
+        [Required]
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+
+        public bool Active { get; set; }
+        public ICollection<Product> products { get; set; }
+
+
+
+>>>>>>> master
 
 
         public Subscriber(string _email, string _phoneNumber, string _firstName, string _lastName, bool _active, string _product, DateTime _subscribtionStart, DateTime _subscribtionEnd)
