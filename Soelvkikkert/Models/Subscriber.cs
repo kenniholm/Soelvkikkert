@@ -9,32 +9,22 @@ namespace Soelvkikkert.Models
     public class Subscriber
     {
 
+        public int ID { get; set; }
+        
+        [Required]
         public string Email { get; set; }
-        [Key]
         public string PhoneNumber { get; set; }
-
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
 
         public bool Active { get; set; }
-        public string Product { get; set; }
-
-        [DataType(DataType.Date)]
-        public DateTime SubscribtionStart { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime SubscribtionEnd { get; set; }
+        public ICollection<Product> products { get; set; }
 
 
-        public Subscriber(string _email, string _phoneNumber, string _firstName, string _lastName, bool _active, string _product, DateTime _subscribtionStart, DateTime _subscribtionEnd)
-        {
-            Email = _email;
-            PhoneNumber = _phoneNumber;
-            FirstName = _firstName;
-            LastName = _lastName;
-            Active = _active;
-            Product = _product;
-            SubscribtionStart = _subscribtionStart;
-            SubscribtionEnd = _subscribtionEnd;
-        }
+
+
+
     }
 }
