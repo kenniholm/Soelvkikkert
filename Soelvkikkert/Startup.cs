@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Soelvkikkert.Models;
 
 namespace Soelvkikkert
 {
@@ -33,6 +35,9 @@ namespace Soelvkikkert
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddDbContext<VitecContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("VitecContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
