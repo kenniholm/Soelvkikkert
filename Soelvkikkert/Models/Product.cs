@@ -9,10 +9,12 @@ namespace Soelvkikkert.Models
     public class Product
     {
         public int ID { get; set; }
-
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        public double Price { get; set; }
+        [Required]
+        [DataType(DataType.Currency)]
+        public decimal Price { get; set; }
         [DataType(DataType.Date)]
         public DateTime SubscribtionStart { get; set; }
         [DataType(DataType.Date)]
