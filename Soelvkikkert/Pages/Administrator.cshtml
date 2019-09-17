@@ -5,29 +5,7 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Fornavn</th>
-      <th scope="col">Efternavn</th>
-      <th scope="col">Email</th>
-      <th scope="col">Tlf</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-      @{
-          for(int i = 0; i <= 10; i++){
-            <tr>
-            <th scope="row">@i</th>
-            <td></td>
-            <td>Otto</td>
-            <td>johnni@noget.com</td>
-            <td>888888888</td>
-            <td>Aktiv</td>
-            </tr>
-          }
-      }
-  </tbody>
-</table>
+<a class="btn btn-primary" href="Products/Index.cshtml" role="button">Administrer Produkter</a>
+<a class="btn btn-primary" href="Subscribers/Index.cshtml" role="button">Administrer Abonnenter</a>
+
+
