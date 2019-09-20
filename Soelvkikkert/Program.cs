@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Soelvkikkert.Data;
 using Soelvkikkert.Models;
 
 namespace Soelvkikkert
@@ -28,7 +29,7 @@ namespace Soelvkikkert
                 try
                 {
                     var context = services.GetRequiredService<VitecContext>();
-                    context.Database.EnsureCreated();
+                    DBInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
