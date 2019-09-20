@@ -12,6 +12,7 @@ namespace Soelvkikkert.Models
         public int ID { get; set; }
         
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Display(Name = "Phone number")]
