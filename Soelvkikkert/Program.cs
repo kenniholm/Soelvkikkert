@@ -9,8 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Soelvkikkert.Data;
-using Soelvkikkert.Models;
+using NLog.Extensions.Logging;
 
 namespace Soelvkikkert
 {
@@ -41,6 +40,13 @@ namespace Soelvkikkert
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            .ConfigureLogging((hostingContext, logging) =>
+            {
+                logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                logging.AddConsole();
+                logging.AddDebug();
+                logging.AddEventSourceLogger();
+                logging.AddNLog();
+            }).UseStartup<Startup>();
     }
 }
