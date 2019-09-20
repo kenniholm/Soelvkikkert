@@ -23,6 +23,8 @@ namespace Soelvkikkert.Models
         ICollection<PaymentInterval> PaymentIntervals { get; set; }
 
         public PaymentInterval SelectedPaymentInterval { get; set; }
+
+        public int PaymentIntervalID { get; set; }
         public int SubscriberID { get; set; }
 
     }
