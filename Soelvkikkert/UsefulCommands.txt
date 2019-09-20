@@ -1,3 +1,14 @@
 Create publish folder: dotnet publish -c Release -o ./publish
 
 Create new Pages: dotnet new page --name Indtast navn --namespace Soelvkikkert.Pages --output Pages
+
+Install scaffold tools: dotnet tool install --global
+dotnet-aspnet-codegenerator
+Scaffold: Copy dotnet aspnet-codegenerator razorpage -m <Model> -dc
+<ContextFileName> -udl -outDir <Output directory> --referenceScriptLibraries
+
+-- Database --
+Make migrations: dotnet ef migrations add <MigrationName>
+Apply migrations: dotnet ef database update
+Drop databse (!!DANGER TO MANIFOLD!!): dotnet ef database drop
+
