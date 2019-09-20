@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using Soelvkikkert.Data;
+using Soelvkikkert.Models;
 
 namespace Soelvkikkert
 {
