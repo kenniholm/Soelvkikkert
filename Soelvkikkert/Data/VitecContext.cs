@@ -35,7 +35,7 @@ namespace Soelvkikkert.Models
                 .HasKey(p => new { p.PaymentIntervalID, p.ProductID });
             modelBuilder.Entity<SubscriberProduct>().ToTable("SubscriberProduct");
             modelBuilder.Entity<SubscriberProduct>()
-                .HasKey(p => new { p.SubscriberID, p.ProductID, p.PaymentIntervalID });
+                .HasKey(p => new { p.SubscriberID, p.ProductID });
         }
     }
 }
