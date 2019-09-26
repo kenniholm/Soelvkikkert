@@ -39,8 +39,9 @@ namespace Soelvkikkert
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An Error occurred creating the DB.");
+                    logger.LogError(ex, $"An Error occurred creating the DB. {ex.ToString():ex.Message}");
                 }
+                
             }
         }
 
