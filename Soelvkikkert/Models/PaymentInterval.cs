@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Soelvkikkert.Models
     public class PaymentInterval
     {
         public int ID { get; set; }
-        [DataType(DataType.Time)]
+        [DataType(DataType.Date)]
         public TimeSpan Interval { get; set; }
         public double Discount { get; set; }
     }

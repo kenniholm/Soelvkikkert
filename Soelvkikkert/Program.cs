@@ -19,10 +19,14 @@ namespace Soelvkikkert
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var host = CreateWebHostBuilder(args).Build();
+
+            CreateDBIfNoExists(host);
+
+            host.Run();
         }
 
-        private static void CreateDBIfNoExists(IHost host)
+        private static void CreateDBIfNoExists(IWebHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -35,8 +39,9 @@ namespace Soelvkikkert
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An Error occurred creating the DB.");
+                    logger.LogError(ex, $"An Error occurred creating the DB. {ex.ToString():ex.Message}");
                 }
+                
             }
         }
 
