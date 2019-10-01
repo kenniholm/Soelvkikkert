@@ -13,6 +13,9 @@ namespace SoelvkikkertMVC.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+
 
         ICollection<PaymentInterval> PaymentIntervals { get; set; }
     }
