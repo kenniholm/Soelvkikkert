@@ -16,6 +16,7 @@ namespace SoelvkikkertMVC.Models
 
         public DbSet<SoelvkikkertMVC.Models.Product> Product { get; set; }
         public DbSet<SoelvkikkertMVC.Models.Subscriber> Subscriber { get; set; }
+        public DbSet<SoelvkikkertMVC.Models.Employee> Employee { get; set; }
         public DbSet<SoelvkikkertMVC.Models.ProductPaymentInterval> ProductPaymentInterval { get; set; }
         public DbSet<SoelvkikkertMVC.Models.PaymentInterval> PaymentInterval { get; set; }
         public DbSet<SoelvkikkertMVC.Models.SubscriberProduct> SubscriberProduct { get; set; }
@@ -27,6 +28,9 @@ namespace SoelvkikkertMVC.Models
                  .Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<Subscriber>().ToTable("Subscriber");
             modelBuilder.Entity<Subscriber>()
+                 .Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<Employee>().ToTable("Employee");
+            modelBuilder.Entity<Employee>()
                  .Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<PaymentInterval>().ToTable("Payment Interval");
             modelBuilder.Entity<ProductPaymentInterval>().ToTable("ProductPaymentInterval");

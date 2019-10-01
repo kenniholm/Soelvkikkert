@@ -33,6 +33,7 @@ namespace SoelvkikkertMVC.Controllers
             }
 
             var product = await _context.Product
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (product == null)
             {
@@ -85,34 +86,76 @@ namespace SoelvkikkertMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Price")] Product product)
+        public async Task<IActionResult> Edit(int? id, byte[] rowVersion)
         {
-            if (id != product.ID)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var productToUpdate = await _context.Product/*.Include(i => i.Administrator)*/.FirstOrDefaultAsync(m => m.ID == id);
+
+            if (productToUpdate == null)
+            {
+                Product deletedProduct = new Product();
+                await TryUpdateModelAsync(deletedProduct);
+                ModelState.AddModelError(string.Empty,
+                    "Unable to save changes. The product was deleted by another user.");
+                ViewData["ID"] = new SelectList(_context, "ID", "FullName", deletedDepartment.InstructorID);
+                return View(deletedProduct);
+            }
+
+            _context.Entry(productToUpdate).Property("RowVersion").OriginalValue = rowVersion;
+
+            if (await TryUpdateModelAsync<Product>(
+                productToUpdate,
+                "",
+                s => s.Name, s => s.StartDate, s => s.Budget, s => s.InstructorID))
             {
                 try
                 {
-                    _context.Update(product);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    if (!ProductExists(product.ID))
+                    var exceptionEntry = ex.Entries.Single();
+                    var clientValues = (Product)exceptionEntry.Entity;
+                    var databaseEntry = exceptionEntry.GetDatabaseValues();
+                    if (databaseEntry == null)
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty,
+                            "Unable to save changes. The product was deleted by another user.");
                     }
                     else
                     {
-                        throw;
+                        var databaseValues = (Product)databaseEntry.ToObject();
+
+                        if (databaseValues.Name != clientValues.Name)
+                        {
+                            ModelState.AddModelError("Name", $"Current value: {databaseValues.Name}");
+                        }
+                        if (databaseValues.Price != clientValues.Price)
+                        {
+                            ModelState.AddModelError("Price", $"Current value: {databaseValues.Price:c}");
+                        }
+                        if (databaseValues.Description != clientValues.Description)
+                        {
+                            ModelState.AddModelError("Description", $"Current value: {databaseValues.Description:d}");
+                        }
+
+                        ModelState.AddModelError(string.Empty, "The record you attempted to edit "
+                                + "was modified by another user after you got the original value. The "
+                                + "edit operation was canceled and the current values in the database "
+                                + "have been displayed. If you still want to edit this record, click "
+                                + "the Save button again. Otherwise click the Back to List hyperlink.");
+                        productToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
+                        ModelState.Remove("RowVersion");
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", departmentToUpdate.InstructorID);
+            return View(departmentToUpdate);
         }
 
         // GET: Product/Delete/5

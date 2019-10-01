@@ -33,6 +33,7 @@ namespace SoelvkikkertMVC.Controllers
             }
 
             var subscriber = await _context.Subscriber
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (subscriber == null)
             {
