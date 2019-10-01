@@ -10,7 +10,7 @@ namespace SoelvkikkertMVC.Models
     {
 
         public int ID { get; set; }
-        
+
         [Required]
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -21,5 +21,8 @@ namespace SoelvkikkertMVC.Models
 
         public bool Active { get; set; }
         public ICollection<Product> products { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

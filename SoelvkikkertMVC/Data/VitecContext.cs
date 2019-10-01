@@ -23,8 +23,12 @@ namespace SoelvkikkertMVC.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().ToTable("Product");
+            modelBuilder.Entity<Product>()
+                 .Property(p => p.RowVersion).IsConcurrencyToken();
             modelBuilder.Entity<Subscriber>().ToTable("Subscriber");
-            modelBuilder.Entity<PaymentInterval>().ToTable("PaymentInterval");
+            modelBuilder.Entity<Subscriber>()
+                 .Property(p => p.RowVersion).IsConcurrencyToken();
+            modelBuilder.Entity<PaymentInterval>().ToTable("Payment Interval");
             modelBuilder.Entity<ProductPaymentInterval>().ToTable("ProductPaymentInterval");
             modelBuilder.Entity<ProductPaymentInterval>()
                 .HasKey(p => new { p.PaymentIntervalID, p.ProductID });
