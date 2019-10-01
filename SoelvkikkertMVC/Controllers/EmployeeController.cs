@@ -9,22 +9,22 @@ using SoelvkikkertMVC.Models;
 
 namespace SoelvkikkertMVC.Controllers
 {
-    public class ProductController : Controller
+    public class EmployeeController : Controller
     {
         private readonly VitecContext _context;
 
-        public ProductController(VitecContext context)
+        public EmployeeController(VitecContext context)
         {
             _context = context;
         }
 
-        // GET: Product
+        // GET: Employee
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
+            return View(await _context.Employee.ToListAsync());
         }
 
-        // GET: Product/Details/5
+        // GET: Employee/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,40 +32,40 @@ namespace SoelvkikkertMVC.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var employee = await _context.Employee
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (product == null)
+            if (employee == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(employee);
         }
 
-        // GET: Product/Create
+        // GET: Employee/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Product/Create
+        // POST: Employee/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Description,Price")] Product product)
+        public async Task<IActionResult> Create([Bind("ID,Administrator,RowVersion,FirstName,LastName,PhoneNumber,Email")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(employee);
         }
 
-        // GET: Product/Edit/5
+        // GET: Employee/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,15 +73,15 @@ namespace SoelvkikkertMVC.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var employee = await _context.Employee.FindAsync(id);
+            if (employee == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return View(employee);
         }
 
-        // POST: Product/Edit/5
+        // POST: Employee/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -93,24 +93,24 @@ namespace SoelvkikkertMVC.Controllers
                 return NotFound();
             }
 
-            var productToUpdate = await _context.Product/*.Include(i => i.Administrator)*/.FirstOrDefaultAsync(m => m.ID == id);
+            var employeeToUpdate = await _context.Employee/*.Include(i => i.Administrator)*/.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (productToUpdate == null)
+            if (employeeToUpdate == null)
             {
-                Product deletedProduct = new Product();
-                await TryUpdateModelAsync(deletedProduct);
+                Employee deletedEmployee = new Employee();
+                await TryUpdateModelAsync(deletedEmployee);
                 ModelState.AddModelError(string.Empty,
-                    "Unable to save changes. The product was deleted by another user.");
-                ViewData["ID"] = new SelectList(_context.Product, "ID", "Name", deletedProduct.ID);
-                return View(deletedProduct);
+                    "Unable to save changes. The employee was deleted by another user.");
+                ViewData["ID"] = new SelectList(_context.Employee, "ID", "FirstName", deletedEmployee.ID);
+                return View(deletedEmployee);
             }
 
-            _context.Entry(productToUpdate).Property("RowVersion").OriginalValue = rowVersion;
+            _context.Entry(employeeToUpdate).Property("RowVersion").OriginalValue = rowVersion;
 
-            if (await TryUpdateModelAsync<Product>(
-                productToUpdate,
+            if (await TryUpdateModelAsync<Employee>(
+                employeeToUpdate,
                 "",
-                s => s.Name, s => s.Price, s => s.Description, s => s.ID))
+                s => s.FirstName, s => s.LastName, s => s.PhoneNumber, s => s.ID))
             {
                 try
                 {
@@ -120,28 +120,28 @@ namespace SoelvkikkertMVC.Controllers
                 catch (DbUpdateConcurrencyException ex)
                 {
                     var exceptionEntry = ex.Entries.Single();
-                    var clientValues = (Product)exceptionEntry.Entity;
+                    var clientValues = (Employee)exceptionEntry.Entity;
                     var databaseEntry = exceptionEntry.GetDatabaseValues();
                     if (databaseEntry == null)
                     {
                         ModelState.AddModelError(string.Empty,
-                            "Unable to save changes. The product was deleted by another user.");
+                            "Unable to save changes. The employee was deleted by another user.");
                     }
                     else
                     {
-                        var databaseValues = (Product)databaseEntry.ToObject();
+                        var databaseValues = (Employee)databaseEntry.ToObject();
 
-                        if (databaseValues.Name != clientValues.Name)
+                        if (databaseValues.FirstName != clientValues.FirstName)
                         {
-                            ModelState.AddModelError("Name", $"Current value: {databaseValues.Name}");
+                            ModelState.AddModelError("FirstName", $"Current value: {databaseValues.FirstName}");
                         }
-                        if (databaseValues.Price != clientValues.Price)
+                        if (databaseValues.LastName != clientValues.LastName)
                         {
-                            ModelState.AddModelError("Price", $"Current value: {databaseValues.Price:c}");
+                            ModelState.AddModelError("LastName", $"Current value: {databaseValues.LastName:c}");
                         }
-                        if (databaseValues.Description != clientValues.Description)
+                        if (databaseValues.PhoneNumber != clientValues.PhoneNumber)
                         {
-                            ModelState.AddModelError("Description", $"Current value: {databaseValues.Description:d}");
+                            ModelState.AddModelError("PhoneNumber", $"Current value: {databaseValues.PhoneNumber:d}");
                         }
 
                         ModelState.AddModelError(string.Empty, "The record you attempted to edit "
@@ -149,16 +149,16 @@ namespace SoelvkikkertMVC.Controllers
                                 + "edit operation was canceled and the current values in the database "
                                 + "have been displayed. If you still want to edit this record, click "
                                 + "the Save button again. Otherwise click the Back to List hyperlink.");
-                        productToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
+                        employeeToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
                         ModelState.Remove("RowVersion");
                     }
                 }
             }
-            ViewData["ID"] = new SelectList(_context.Product, "ID", "Name", productToUpdate.ID);
-            return View(productToUpdate);
+            ViewData["ID"] = new SelectList(_context.Employee, "ID", "FirstName", employeeToUpdate.ID);
+            return View(employeeToUpdate);
         }
 
-        // GET: Product/Delete/5
+        // GET: Employee/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -166,30 +166,30 @@ namespace SoelvkikkertMVC.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var employee = await _context.Employee
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (product == null)
+            if (employee == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(employee);
         }
 
-        // POST: Product/Delete/5
+        // POST: Employee/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
+            var employee = await _context.Employee.FindAsync(id);
+            _context.Employee.Remove(employee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool EmployeeExists(int id)
         {
-            return _context.Product.Any(e => e.ID == id);
+            return _context.Employee.Any(e => e.ID == id);
         }
     }
 }

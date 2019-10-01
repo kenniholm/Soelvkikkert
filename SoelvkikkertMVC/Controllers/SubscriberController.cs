@@ -86,34 +86,76 @@ namespace SoelvkikkertMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Email,PhoneNumber,FirstName,LastName,Active")] Subscriber subscriber)
+        public async Task<IActionResult> Edit(int? id, byte[] rowVersion)
         {
-            if (id != subscriber.ID)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var subscriberToUpdate = await _context.Subscriber/*.Include(i => i.Administrator)*/.FirstOrDefaultAsync(m => m.ID == id);
+
+            if (subscriberToUpdate == null)
+            {
+                Subscriber deletedSubscriber = new Subscriber();
+                await TryUpdateModelAsync(deletedSubscriber);
+                ModelState.AddModelError(string.Empty,
+                    "Unable to save changes. The subscriber was deleted by another user.");
+                ViewData["ID"] = new SelectList(_context.Subscriber, "ID", "FirstName", deletedSubscriber.ID);
+                return View(deletedSubscriber);
+            }
+
+            _context.Entry(subscriberToUpdate).Property("RowVersion").OriginalValue = rowVersion;
+
+            if (await TryUpdateModelAsync<Subscriber>(
+                subscriberToUpdate,
+                "",
+                s => s.FirstName, s => s.LastName, s => s.PhoneNumber, s => s.ID))
             {
                 try
                 {
-                    _context.Update(subscriber);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    if (!SubscriberExists(subscriber.ID))
+                    var exceptionEntry = ex.Entries.Single();
+                    var clientValues = (Subscriber)exceptionEntry.Entity;
+                    var databaseEntry = exceptionEntry.GetDatabaseValues();
+                    if (databaseEntry == null)
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty,
+                            "Unable to save changes. The subscriber was deleted by another user.");
                     }
                     else
                     {
-                        throw;
+                        var databaseValues = (Subscriber)databaseEntry.ToObject();
+
+                        if (databaseValues.FirstName != clientValues.FirstName)
+                        {
+                            ModelState.AddModelError("FirstName", $"Current value: {databaseValues.FirstName}");
+                        }
+                        if (databaseValues.LastName != clientValues.LastName)
+                        {
+                            ModelState.AddModelError("LastName", $"Current value: {databaseValues.LastName:c}");
+                        }
+                        if (databaseValues.PhoneNumber != clientValues.PhoneNumber)
+                        {
+                            ModelState.AddModelError("PhoneNumber", $"Current value: {databaseValues.PhoneNumber:d}");
+                        }
+
+                        ModelState.AddModelError(string.Empty, "The record you attempted to edit "
+                                + "was modified by another user after you got the original value. The "
+                                + "edit operation was canceled and the current values in the database "
+                                + "have been displayed. If you still want to edit this record, click "
+                                + "the Save button again. Otherwise click the Back to List hyperlink.");
+                        subscriberToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
+                        ModelState.Remove("RowVersion");
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(subscriber);
+            ViewData["ID"] = new SelectList(_context.Subscriber, "ID", "FirstName", subscriberToUpdate.ID);
+            return View(subscriberToUpdate);
         }
 
         // GET: Subscriber/Delete/5
