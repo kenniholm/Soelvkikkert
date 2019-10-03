@@ -28,7 +28,6 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 Soelvkikkert/Logs
-SoelvkikkertMVC/Logs
 
 # Visual Studio 2015
 .vs/
