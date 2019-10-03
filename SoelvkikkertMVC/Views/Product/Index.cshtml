@@ -1,48 +1,22 @@
 ﻿@model IEnumerable<SoelvkikkertMVC.Models.Product>
-
 @{
-    ViewData["Title"] = "Product";
+    ViewData["Title"] = "Produkter";
 }
 
-<h1>Product</h1>
+<h1>@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
-            </tr>
+<div class="container">
+    <div class="row">
+        @{
+            for(int i=1; i <= 50; i++){
+               <div class="card m-3" style="width: 18rem;">
+                    <img src="~/Images/Soelvkikkert.png" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Produkt nr. @i</h5>
+                        <p>Beskrivelse her... bla bla bla</p>
+                        <a href="https://www.google.com" class="btn btn-primary">Link til produkt</a>
+                    </div>
+                </div>
+            }
         }
-    </tbody>
-</table>
+</div>
