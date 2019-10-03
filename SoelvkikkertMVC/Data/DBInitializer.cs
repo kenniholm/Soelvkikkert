@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+
 namespace SoelvkikkertMVC.Models
 {
     public class DBInitializer

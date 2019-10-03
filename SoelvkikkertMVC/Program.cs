@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using SoelvkikkertMVC.Models;
 
 namespace SoelvkikkertMVC
 {
@@ -15,14 +18,14 @@ namespace SoelvkikkertMVC
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
 
             CreateDbIfNotExists(host);
 
             host.Run();
         }
 
-        private static void CreateDbIfNotExists(IHost host)
+        private static void CreateDbIfNotExists(IWebHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -30,8 +33,8 @@ namespace SoelvkikkertMVC
 
                 try
                 {
-                    var context = services.GetRequiredService<SchoolContext>();
-                    DbInitializer.Initialize(context);
+                    var context = services.GetRequiredService<VitecContext>();
+                    DBInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
