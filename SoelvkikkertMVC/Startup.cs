@@ -35,9 +35,18 @@ namespace SoelvkikkertMVC
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // services.AddDbContext<VitecContext>(options =>
+            //     options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
 
+            if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                 services.AddDbContext<VitecContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
+            }
+            else{
             services.AddDbContext<VitecContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("VitecContext")));
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
