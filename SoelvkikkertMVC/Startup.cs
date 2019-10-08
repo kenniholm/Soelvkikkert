@@ -35,8 +35,7 @@ namespace SoelvkikkertMVC
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            // services.AddDbContext<VitecContext>(options =>
-            //     options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
+
 
             if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             {
