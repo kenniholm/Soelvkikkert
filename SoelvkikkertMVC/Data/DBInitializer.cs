@@ -16,10 +16,10 @@ namespace SoelvkikkertMVC.Models
 
             var paymentIntervals = new PaymentInterval[]
             {
-                new PaymentInterval{ Interval = new TimeSpan(30), Discount = 0},
-                new PaymentInterval{ Interval = new TimeSpan(90), Discount = 2.5},
-                new PaymentInterval{ Interval = new TimeSpan(180), Discount = 5 },
-                new PaymentInterval{ Interval = new TimeSpan(360), Discount = 7.5}
+                new PaymentInterval{ Interval = new TimeSpan(30, 0, 0, 0, 0), Discount = 0},
+                new PaymentInterval{ Interval = new TimeSpan(90, 0, 0, 0, 0), Discount = 2.5},
+                new PaymentInterval{ Interval = new TimeSpan(180, 0, 0, 0, 0), Discount = 5 },
+                new PaymentInterval{ Interval = new TimeSpan(360, 0, 0, 0, 0), Discount = 7.5}
             };
 
             foreach(PaymentInterval p in paymentIntervals)
