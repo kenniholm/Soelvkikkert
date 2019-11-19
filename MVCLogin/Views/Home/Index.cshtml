@@ -5,7 +5,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Velkommen til Sølvkikkert.dk</h1>
-    <img class="image" src="~/images/Soelvkikkert.png" width="1080" height="720" />
+    @*<img class="image" src="~/images/Soelvkikkert.png" width="1080" height="720" />*@
 </div>
 
 <!-- Slideshow container -->
@@ -16,7 +16,7 @@
     @{
         for(int i=0; i < Model.Count; i++)
         {
-            <div class="mySlides fade">
+            <div class="mySlides">
                 <div class="numbertext">@(i+1) / @Model.Count</div>
                 <img src="~/images/Soelvkikkert.png" style="width:100%">
                 <div class="text">@Model[i].Name</div>
