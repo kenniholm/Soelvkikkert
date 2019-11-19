@@ -19,6 +19,12 @@ namespace MVCLogin.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Overview()
+        {
+            return View(await _context.Product.ToListAsync());
+        }
+
+
         // GET: Products
         public async Task<IActionResult> Index()
         {
