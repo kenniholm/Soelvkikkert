@@ -28,6 +28,7 @@ namespace MVCLogin.Controllers
 
         public async Task<IActionResult> Index()
         {
+
             return View(await _apiHelper.GetObjectsFromAPI<List<Product>>());
         }
 
