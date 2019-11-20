@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCLogin.Data;
 using MVCLogin.Models;
-using MVCLogin.APIHelper;
+using MVCLogin.Helpers;
 
 namespace MVCLogin.Controllers
 {
@@ -25,7 +25,7 @@ namespace MVCLogin.Controllers
 
         public async Task<IActionResult> Overview()
         {
-            return View(await _context.Product.ToListAsync());
+            return View(await _apiHelper.GetObjectsFromAPI<List<Product>>());
         }
 
 
