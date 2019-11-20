@@ -28,7 +28,10 @@ namespace MVCLogin.Controllers
 
         public async Task<IActionResult> Index()
         {
+<<<<<<< HEAD
 
+=======
+>>>>>>> GetDataFromAPIGeneric
             return View(await _apiHelper.GetObjectsFromAPI<List<Product>>());
         }
 
