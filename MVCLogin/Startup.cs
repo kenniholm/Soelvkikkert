@@ -37,7 +37,7 @@ namespace MVCLogin
 
             services
                 .AddDbContext<VitecContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("VitecContext")))
+                    options.UseSqlite(Configuration.GetConnectionString("VitecContext")))
                 .AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("ApplicationDbContext")));
 
