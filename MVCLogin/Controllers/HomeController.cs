@@ -29,7 +29,7 @@ namespace MVCLogin.Controllers
         public async Task<IActionResult> Index()
         {
 
-            return View(await _apiHelper.GetObjectsFromAPI<List<Product>>());
+            return View(await _apiHelper.GetObjectsFromAPI<List<Product>>("http://soelvkikkertproductsapi.azurewebsites.net/api/Products"));
         }
 
         public IActionResult Privacy()

@@ -12,16 +12,15 @@ namespace MVCLogin.Helpers
     {
 
         private IHttpClientFactory _clientFactory;
-        private string url = "http://soelvkikkertproductsapi.azurewebsites.net/api/Products";
 
         public APIHelper(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
         }
 
-        public async Task<T> GetObjectsFromAPI<T>()
+        public async Task<T> GetObjectsFromAPI<T>(string connectionString)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            var request = new HttpRequestMessage(HttpMethod.Get, connectionString);
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
 
