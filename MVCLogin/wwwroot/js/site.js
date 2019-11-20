@@ -3,8 +3,10 @@
 
 // Write your JavaScript code.
 
-var slideIndex = 1;
-showSlides(slideIndex);
+var slideIndex = 0;
+const slideDelay = 5000;
+
+advanceSlides(slideIndex);
 
 // Next/previous controls
 function plusSlides(n) {
@@ -30,4 +32,10 @@ function showSlides(n) {
     }
     slides[slideIndex - 1].style.display = "block";
     dots[slideIndex - 1].className += " active";
+}
+
+function advanceSlides() {
+    slideIndex++;
+    showSlides(slideIndex);
+    setTimeout(advanceSlides, slideDelay);
 }
