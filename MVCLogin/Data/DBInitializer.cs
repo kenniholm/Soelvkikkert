@@ -67,11 +67,12 @@ namespace MVCLogin.Data
 
             var products = new Product[]
             {
-                new Product { Name = "IntoWords", Description = "Digitalt værktøj der hjælper dig med at skrive og læse, på både bærbare computere, tablets og mobil telefoner", Price = 30},
-                new Product { Name = "C-Pen", Description = "Skan ord eller sætninger ind på computeren så de kan læses op", Price = 20},
-                new Product { Name = "Grammateket", Description = "Tjekker din tekst for fejl i stavning, grammatik og kommatering", Price = 25},
-                new Product { Name = "Matematikleg Flex", Description = "Hjælp til elever med matematikvanskeligheder", Price = 40},
-                new Product { Name = "MiVo", Description = "Træner brugen af skrivehjælpen i CD-ORD og IntoWords  ", Price = 15}
+                new Product { Name = "IntoWords", Description = "Digitalt værktøj der hjælper dig med at skrive og læse, på både bærbare computere, tablets og mobil telefoner", Price = 30, ImageName="IntoWords.png"},
+                new Product { Name = "C-Pen", Description = "Skan ord eller sætninger ind på computeren så de kan læses op", Price = 20, ImageName="PlaceHolder.png"},
+                new Product { Name = "Grammatekst", Description = "Tjekker din tekst for fejl i stavning, grammatik og kommatering", Price = 25, ImageName="PlaceHolder.png"},
+                new Product { Name = "Matematikleg Flex", Description = "Hjælp til elever med matematikvanskeligheder", Price = 40, ImageName="PlaceHolder.png"},
+                new Product { Name = "MiVo", Description = "Træner brugen af skrivehjælpen i CD-ORD og IntoWords  ", Price = 15, ImageName="PlaceHolder.png"},
+                new Product { Name = "CD-Ord", Description="Pc-baseret læse- og skriveprogram, der hjælper usikre læsere og ordblinde.", Price=42, ImageName="PlaceHolder.png"}
             };
 
             foreach (Product p in products)

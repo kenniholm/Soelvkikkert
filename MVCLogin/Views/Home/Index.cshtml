@@ -17,8 +17,11 @@
         {
             <div class="mySlides">
                 <div class="numbertext">@(i+1) / @Model.Count</div>
-                <img src="~/images/Soelvkikkert.png" style="width:100%">
-                <div class="text">@Model[i].Name</div>
+                <img src="~/images/Products/@Model[i].ImageName" style="width:1000px; height:530px">
+                <div class="text">
+                    <p style="font-size:32px; font-weight:bold; margin-bottom:2px; -webkit-text-stroke: 2px black;">@Model[i].Name</p>
+                    <a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id=@Model[i].ID class="btn btn-primary">Link til produkt</a>
+                </div>
             </div>
         }
     }

@@ -19,6 +19,8 @@ namespace MVCLogin.Models
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
+        public string ImageName { get; set; }
+
 
         ICollection<PaymentInterval> PaymentIntervals { get; set; }
     }
