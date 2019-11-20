@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCLogin.Data;
 using MVCLogin.Models;
+using MVCLogin.APIHelper;
 
 namespace MVCLogin.Controllers
 {
     public class ProductController : Controller
     {
         private readonly VitecContext _context;
+        private Helpers.APIHelper _apiHelper;
 
-        public ProductController(VitecContext context)
+        public ProductController(VitecContext context, IHttpClientFactory clientFactory)
         {
             _context = context;
+            _apiHelper = new Helpers.APIHelper(clientFactory);
         }
 
         public async Task<IActionResult> Overview()
@@ -28,7 +32,7 @@ namespace MVCLogin.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
+            return View(await _apiHelper.GetObjectsFromAPI<List<Product>>());
         }
 
         // GET: Products/Details/5
@@ -155,5 +159,6 @@ namespace MVCLogin.Controllers
         {
             return _context.Product.Any(e => e.ID == id);
         }
+
     }
 }
