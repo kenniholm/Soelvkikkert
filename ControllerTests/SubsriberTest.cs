@@ -14,13 +14,17 @@ namespace ControllerTests
 {
     public class SubsriberTest
     {
+        DbContextOptions<VitecContext> options;
+        public SubsriberTest()
+        {
+            options = new DbContextOptionsBuilder<VitecContext>()
+                .UseInMemoryDatabase(databaseName: "SubsriberDatabase").Options;
+        }
+        
         [Fact]
         public async void Index_ReturnsAViewResult_WithListOfSubscribers()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<VitecContext>()
-                .UseInMemoryDatabase(databaseName: "SubsriberDatabase").Options;
-
             VitecContext context = new VitecContext(options);
             context.Subscriber.Add(new Subscriber
             {
