@@ -91,5 +91,39 @@ namespace ControllerTests
             // Assert that it's the correct subsriber
             Assert.Equal("Nidolaj", sub.FirstName);
         }
+
+        [Fact]
+        public async void Details_ReturnsNotFound()
+        {
+            // Arrange
+            options = new DbContextOptionsBuilder<VitecContext>()
+                .UseInMemoryDatabase(databaseName: "DetailsNotFoundSubsriberDatabase").Options;
+            VitecContext context = new VitecContext(options);
+            context.Subscriber.Add(new Subscriber
+            {
+                FirstName = "Kenni",
+                LastName = "Bobber",
+                PhoneNumber = "88888888",
+                Active = true,
+                Email = "Kenni@bobber.dk",
+                ID = 1
+            });
+            context.Subscriber.Add(new Subscriber
+            {
+                FirstName = "Nidolaj",
+                LastName = "Molle",
+                PhoneNumber = "88888888",
+                Active = true,
+                Email = "Nidolaj@molle.dk",
+                ID = 2
+            });
+            context.SaveChanges();
+            SubscriberController controller = new SubscriberController(context);
+
+            // Act
+            IActionResult result = await controller.Details(6);
+
+            Assert.IsType<NotFoundResult>(result);
+        }
     }
 }
