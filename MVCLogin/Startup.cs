@@ -35,6 +35,9 @@ namespace MVCLogin
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAuthorization(options =>
+                options.AddPolicy("AdminAccess", policy => policy.RequireRole("Administrator")));
+
             services
                 .AddDbContext<VitecContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("VitecContext")))
@@ -50,7 +53,7 @@ namespace MVCLogin
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -70,6 +73,7 @@ namespace MVCLogin
 
             app.UseAuthentication();
             app.UseAuthorization();
+            CreateRoles(serviceProvider).Wait();
 
             app.UseEndpoints(endpoints =>
             {
@@ -78,6 +82,40 @@ namespace MVCLogin
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string[] roleNames = { "Administrator", "Employee" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await roleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+
+                IdentityUser kasper = await userManager.FindByEmailAsync("Kasper@hotmail.com");
+
+                await userManager.AddToRoleAsync(kasper, "Administrator");
+
+                IdentityUser nikolaj = await userManager.FindByEmailAsync("Nikolaj@hotmail.com");
+
+                await userManager.AddToRoleAsync(nikolaj, "Administrator");
+
+                IdentityUser kenni = await userManager.FindByEmailAsync("Kenni@hotmail.com");
+
+                await userManager.AddToRoleAsync(kenni, "Administrator");
+
+                IdentityUser victor = await userManager.FindByEmailAsync("Victor@hotmail.com");
+
+                await userManager.AddToRoleAsync(victor, "Administrator");
+            }
+
         }
     }
 }
