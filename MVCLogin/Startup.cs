@@ -45,6 +45,7 @@ namespace MVCLogin
                     options.UseSqlite(Configuration.GetConnectionString("ApplicationDbContext")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddHttpClient();
             services.AddControllersWithViews();
@@ -99,21 +100,39 @@ namespace MVCLogin
                     roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
 
-                //IdentityUser kasper = await userManager.FindByEmailAsync("Kasper@hotmail.com");
+                IdentityUser kasper = await userManager.FindByEmailAsync("kasper@hotmail.com");
+                if (kasper == null)
+                {
+                    return;
+                }
+                await userManager.AddToRoleAsync(kasper, "Administrator");
 
-                //await userManager.AddToRoleAsync(kasper, "Administrator");
 
-                //IdentityUser nikolaj = await userManager.FindByEmailAsync("Nikolaj@hotmail.com");
+                IdentityUser nikolaj = await userManager.FindByEmailAsync("nikolaj@hotmail.com");
 
-                //await userManager.AddToRoleAsync(nikolaj, "Administrator");
+                if (nikolaj == null)
+                {
+                    return;
+                }
 
-                //IdentityUser kenni = await userManager.FindByEmailAsync("Kenni@hotmail.com");
+                await userManager.AddToRoleAsync(nikolaj, "Administrator");
 
-                //await userManager.AddToRoleAsync(kenni, "Administrator");
+                IdentityUser kenni = await userManager.FindByEmailAsync("kenni@hotmail.com");
+                if (kenni == null)
+                {
+                    return;
+                }
 
-                //IdentityUser victor = await userManager.FindByEmailAsync("Victor@hotmail.com");
+                await userManager.AddToRoleAsync(kenni, "Administrator");
 
-                //await userManager.AddToRoleAsync(victor, "Administrator");
+                IdentityUser victor = await userManager.FindByEmailAsync("victor@hotmail.com");
+
+                if (victor == null)
+                {
+                    return;
+                }
+
+                await userManager.AddToRoleAsync(victor, "Administrator");
             }
 
         }
