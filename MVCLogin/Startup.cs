@@ -99,21 +99,21 @@ namespace MVCLogin
                     roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
 
-                IdentityUser kasper = await userManager.FindByEmailAsync("Kasper@hotmail.com");
+                //IdentityUser kasper = await userManager.FindByEmailAsync("Kasper@hotmail.com");
 
-                await userManager.AddToRoleAsync(kasper, "Administrator");
+                //await userManager.AddToRoleAsync(kasper, "Administrator");
 
-                IdentityUser nikolaj = await userManager.FindByEmailAsync("Nikolaj@hotmail.com");
+                //IdentityUser nikolaj = await userManager.FindByEmailAsync("Nikolaj@hotmail.com");
 
-                await userManager.AddToRoleAsync(nikolaj, "Administrator");
+                //await userManager.AddToRoleAsync(nikolaj, "Administrator");
 
-                IdentityUser kenni = await userManager.FindByEmailAsync("Kenni@hotmail.com");
+                //IdentityUser kenni = await userManager.FindByEmailAsync("Kenni@hotmail.com");
 
-                await userManager.AddToRoleAsync(kenni, "Administrator");
+                //await userManager.AddToRoleAsync(kenni, "Administrator");
 
-                IdentityUser victor = await userManager.FindByEmailAsync("Victor@hotmail.com");
+                //IdentityUser victor = await userManager.FindByEmailAsync("Victor@hotmail.com");
 
-                await userManager.AddToRoleAsync(victor, "Administrator");
+                //await userManager.AddToRoleAsync(victor, "Administrator");
             }
 
         }
