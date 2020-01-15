@@ -24,26 +24,26 @@ namespace MVCLogin.Middleware
         private readonly RequestDelegate _next;
         private List<String> blockList = new List<string>
         {
-            "2.60.0.0",
-            "2.60.32.0",
-            "2.60.64.0",
-            "2.60.96.0",
-            "2.60.128.0",
-            "2.60.160.0",
-            "2.60.192.0",
-            "2.61.0.0",
-            "2.61.32.0",
-            "2.61.64.0",
-            "2.61.96.0",
-            "2.61.112.0",
-            "2.61.120.0",
-            "2.61.128.0",
-            "2.61.160.0",
-            "2.61.192.0",
-            "2.62.0.0",
-            "2.62.32.0",
-            "2.62.48.0",
-            "2.62.64.0",
+            "2.60.0.",
+            "2.60.32.",
+            "2.60.64.",
+            "2.60.96.",
+            "2.60.128.",
+            "2.60.160.",
+            "2.60.192.",
+            "2.61.0.",
+            "2.61.32.",
+            "2.61.64.",
+            "2.61.96.",
+            "2.61.112.",
+            "2.61.120.",
+            "2.61.128.",
+            "2.61.160.",
+            "2.61.192.",
+            "2.62.0.",
+            "2.62.32.",
+            "2.62.48.",
+            "2.62.64.",
         };
 
         public NoRussian(RequestDelegate next)
@@ -55,15 +55,24 @@ namespace MVCLogin.Middleware
         {
 
             string ip = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            if (!blockList.Contains(ip))
+            bool blockIp = false;
+            foreach (string block in blockList)
             {
-                await _next(context);
+                if (ip.StartsWith(block))
+                {
+                    blockIp = true;
+                    
+                }
             }
-            else
+
+            if (blockIp)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             }
-
+            else
+            {
+                await _next(context);
+            }
 
         }
     }
